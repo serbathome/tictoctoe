@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крестики-Нолики</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script>
+
+        var element = "tic"
+
+        function switchElement() {
+            if (element == "tic") {
+                element = "toc";
+            }
+            else {
+                element = "tic";
+            }
+        }
+
+        let squares = {
+            1: [0, 0, 100, 100],
+            2: [100, 0, 200, 100],
+            3: [200, 0, 300, 100],
+            4: [0, 100, 100, 200],
+            5: [100, 100, 200, 200],
+            6: [200, 100, 300, 200],
+            7: [0, 200, 100, 300],
+            8: [100, 200, 200, 300],
+            9: [200, 200, 300, 300]
+        }
+
+        var field = [null, null, null, null, null, null, null, null, null]
+
+
+        function gameOver() {
+
+            if (field[0] == field[1] && field[1] == field[2] && field[0] != null) {
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.beginPath();
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 7;
+                    ctx.lineCap = "round";
+                    ctx.moveTo(squares[1][0], (squares[1][1] + squares[1][3]) / 2);
+                    ctx.lineTo(squares[3][0] + 100, (squares[3][1] + squares[3][3]) / 2);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                canvas.removeEventListener('click', clickHandler, true);
+                return true;
+            }
+            if (field[3] == field[4] && field[4] == field[5] && field[3] != null) {
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.beginPath();
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 7;
+                    ctx.lineCap = "round";
+                    ctx.moveTo(squares[4][0], (squares[4][1] + squares[4][3]) / 2);
+                    ctx.lineTo(squares[6][0] + 100, (squares[6][1] + squares[6][3]) / 2);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                canvas.removeEventListener('click', clickHandler, true);
+                return true;
+
+            }
+            if (field[6] == field[7] && field[7] == field[8] && field[6] != null) {
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.beginPath();
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 7;
+                    ctx.lineCap = "round";
+                    ctx.moveTo(squares[7][0], (squares[7][1] + squares[7][3]) / 2);
+                    ctx.lineTo(squares[9][0] + 100, (squares[9][1] + squares[9][3]) / 2);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                canvas.removeEventListener('click', clickHandler, true);
+                return true;
+            }
+            if (field[0] == field[3] && field[3] == field[6] && field[0] != null) {
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.beginPath();
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 7;
+                    ctx.lineCap = "round";
+                    ctx.moveTo((squares[1][0] + squares[1][2]) / 2, squares[1][1]);
+                    ctx.lineTo((squares[7][0] + squares[7][2]) / 2, squares[7][1] + 100);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                canvas.removeEventListener('click', clickHandler, true);
+                return true;
+            }
+            if (field[1] == field[4] && field[4] == field[7] && field[1] != null) {
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.beginPath();
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 7;
+                    ctx.lineCap = "round";
+                    ctx.moveTo((squares[2][0] + squares[2][2]) / 2, squares[2][1]);
+                    ctx.lineTo((squares[8][0] + squares[8][2]) / 2, squares[8][1] + 100);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                canvas.removeEventListener('click', clickHandler, true);
+                return true;
+            }
+            if (field[2] == field[5] && field[5] == field[8] && field[2] != null) {
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.beginPath();
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 7;
+                    ctx.lineCap = "round";
+                    ctx.moveTo((squares[3][0] + squares[3][2]) / 2, squares[3][1]);
+                    ctx.lineTo((squares[9][0] + squares[9][2]) / 2, squares[9][1] + 100);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                canvas.removeEventListener('click', clickHandler, true);
+                return true;
+            }
+            if (field[0] == field[4] && field[4] == field[8] && field[0] != null) {
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.beginPath();
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 7;
+                    ctx.lineCap = "round";
+                    ctx.moveTo(squares[1][0], squares[1][1]);
+                    ctx.lineTo(squares[9][2], squares[9][3]);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                canvas.removeEventListener('click', clickHandler, true);
+                return true;
+            }
+            if (field[2] == field[4] && field[4] == field[6] && field[2] != null) {
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.beginPath();
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = 7;
+                    ctx.lineCap = "round";
+                    ctx.moveTo(squares[3][2], squares[3][1]);
+                    ctx.lineTo(squares[7][0], squares[7][3]);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                canvas.removeEventListener('click', clickHandler, true);
+                return true;
+            }
+        }
+
+        function coordsToSquare(x, y) {
+            if (x > 0 && x < 100 && y > 0 && y < 100) {
+                return 1;
+            }
+            if (x > 100 && x < 200 && y > 0 && y < 100) {
+                return 2;
+            }
+            if (x > 200 && x < 300 && y > 0 && y < 100) {
+                return 3;
+            }
+
+            // second row
+            if (x > 0 && x < 100 && y > 100 && y < 200) {
+                return 4;
+            }
+
+            if (x > 100 && x < 200 && y > 100 && y < 200) {
+                return 5;
+            }
+
+            if (x > 200 && x < 300 && y > 100 && y < 200) {
+                return 6;
+            }
+
+            // third row
+            if (x > 0 && x < 100 && y > 200 && y < 300) {
+                return 7;
+            }
+
+            if (x > 100 && x < 200 && y > 200 && y < 300) {
+                return 8;
+            }
+
+            if (x > 200 && x < 300 && y > 200 && y < 300) {
+                return 9;
+            }
+        }
+
+        function drawSquare(square, element) {
+            var canvas = document.getElementById('field');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.lineCap = "round";
+                if (element == "tic") {
+                    // draw tic
+                    ctx.strokeStyle = "blue";
+                    var x1 = squares[square][0] + 10
+                    var y1 = squares[square][1] + 10
+                    var x2 = squares[square][2] - 10
+                    var y2 = squares[square][3] - 10
+
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.moveTo(x2, y1);
+                    ctx.lineTo(x1, y2);
+
+                    ctx.stroke();
+                }
+                else {
+                    // draw toc
+                    ctx.strokeStyle = "green";
+                    var centerX = (squares[square][0] + squares[square][2]) / 2
+                    var centerY = (squares[square][1] + squares[square][3]) / 2
+                    ctx.arc(centerX, centerY, 40, 0, Math.PI * 2, true);
+                    ctx.stroke();
+                }
+                ctx.closePath();
+            }
+        }
+
+        var clickHandler = function (event) {
+            var canvas = document.getElementById('field');
+            // paint game field
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                var x = event.pageX - (canvas.offsetLeft + canvas.clientLeft);
+                var y = event.pageY - (canvas.offsetTop + canvas.clientTop);
+
+                var square = coordsToSquare(x, y);
+
+                if (field[square - 1] == null) {
+                    drawSquare(square, element);
+                    field[square - 1] = element;
+                    switchElement();
+
+                    if (gameOver()) {
+                        console.log("Game is over!");
+                    }
+                }
+            }
+        }
+
+
+        function draw() {
+            var canvas = document.getElementById('field');
+            // paint game field
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(100, 0);
+                ctx.lineTo(100, 300);
+                ctx.moveTo(200, 0);
+                ctx.lineTo(200, 300);
+                ctx.moveTo(0, 100);
+                ctx.lineTo(300, 100);
+                ctx.moveTo(0, 200);
+                ctx.lineTo(300, 200);
+                ctx.stroke();
+                ctx.closePath();
+            }
+            // add onclick handler
+            canvas.addEventListener('click', clickHandler, true);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            draw();
+            document.getElementById("reset").onclick = function () {
+                element = "tic";
+                field = [null, null, null, null, null, null, null, null, null];
+                var canvas = document.getElementById('field');
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext('2d');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+                draw();
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <section>
+            <canvas id="field" width="300" height="300"></canvas>
+        </section>
+        <section>
+            <button class="btn btn-primary" type="reset" id="reset">Start new game</button>
+        </section>
+    </div>
+</body>
+
+</html>
